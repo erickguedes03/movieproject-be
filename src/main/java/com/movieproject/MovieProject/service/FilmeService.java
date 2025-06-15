@@ -24,7 +24,12 @@ public class FilmeService {
 
     public List<Filme> filtrarPorGenero(String genero){
         return filmeRepository.findByGeneroContainingIgnoreCase(genero);
+
     }
+    public Filme salvar(Filme filme) {
+        return filmeRepository.save(filme);
+    }
+
 
     public List<Filme> buscarPorTitulo(String titulo) {
         return filmeRepository.findByTituloContainingIgnoreCase(titulo);

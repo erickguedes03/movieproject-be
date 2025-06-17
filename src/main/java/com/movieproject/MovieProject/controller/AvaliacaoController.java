@@ -1,8 +1,7 @@
 package com.movieproject.MovieProject.controller;
 
 import com.movieproject.MovieProject.model.Avaliacao;
-import com.movieproject.MovieProject.repository.AvaliacaoRepository;
-import com.movieproject.MovieProject.repository.FilmeRepository;
+import com.movieproject.MovieProject.service.AvaliacaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,22 +15,16 @@ import java.util.List;
 public class AvaliacaoController {
 
     @Autowired
-    private AvaliacaoRepository avaliacaoRepository;
-
-    @Autowired
-    private FilmeRepository filmeRepository;
+    private AvaliacaoService avaliacaoService;
 
     @PostMapping("/{filmeId}")
     public ResponseEntity<Avaliacao> cadastrar(@PathVariable Long filmeId, @RequestBody @Valid Avaliacao avaliacao) {
-        return filmeRepository.findById(filmeId).map(filme -> {
-            avaliacao.setFilme(filme);
-            Avaliacao salva = avaliacaoRepository.save(avaliacao);
-            return ResponseEntity.status(HttpStatus.CREATED).body(salva);
-        }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        Avaliacao salva = avaliacaoService.cadastrarAvaliacao(filmeId, avaliacao);
+        return ResponseEntity.status(HttpStatus.CREATED).body(salva);
     }
 
     @GetMapping("/{filmeId}")
-    public List<Avaliacao> listarPorFilme(@PathVariable Long filmeId){
-        return avaliacaoRepository.findByFilmeId(filmeId);
+    public List<Avaliacao> listarPorFilme(@PathVariable Long filmeId) {
+        return avaliacaoService.listarAvaliacoesPorFilme(filmeId);
     }
 }

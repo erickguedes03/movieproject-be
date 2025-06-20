@@ -29,8 +29,6 @@ public class FilmeService {
     public Filme salvar(Filme filme) {
         return filmeRepository.save(filme);
     }
-
-
     public List<Filme> buscarPorTitulo(String titulo) {
         return filmeRepository.findByTituloContainingIgnoreCase(titulo);
     }

@@ -7,6 +7,8 @@ import com.movieproject.MovieProject.service.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,11 @@ public class FilmeController {
     @GetMapping
     public List<Filme> listarTodos(){
         return filmeService.listarTodos();
+    }
+
+    @PostMapping
+    public Filme criarFilme(@RequestBody Filme filme) {
+        return filmeService.salvar(filme);
     }
 
     @GetMapping("/{id}")

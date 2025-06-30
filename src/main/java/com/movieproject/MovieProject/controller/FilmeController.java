@@ -31,6 +31,12 @@ public class FilmeController {
         return filmeService.salvar(filme);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarFilme(@PathVariable Long id) {
+        filmeService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Filme> buscarPorId(@PathVariable Long id){
         return filmeService.buscarPorId(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
